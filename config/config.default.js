@@ -23,6 +23,12 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+
   config.sequelize = {
     dialect: 'mysql',
     database: 'steam_vgfuns',

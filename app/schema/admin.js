@@ -1,5 +1,7 @@
 'use strict';
-
+/**
+ * 文件名字就是table名字
+ */
 module.exports = app => {
   const { INTEGER, STRING, BIGINT, DATE, UUIDV1, ENUM } = app.Sequelize;
 
@@ -42,6 +44,10 @@ module.exports = app => {
     },
     user_type: {
       type: ENUM('admin'),
+      allowNull: false,
+    },
+    name: {
+      type: STRING(76),
       allowNull: false,
     },
   };

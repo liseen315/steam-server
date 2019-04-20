@@ -15,6 +15,22 @@ module.exports = {
         const schema = require(filePath)({ Sequelize });
         await queryInterface.createTable(fileName.replace('.js', ''), schema);
       }
+
+      // 首次进行migrate的时候创建超级管理员
+
+      await queryInterface.bulkInsert('admin', [
+        {
+          uuid: uuidv1(),
+          username: 'liseen',
+          password: '5e89975ce4e20fa7adbde6b1cf70a61a',
+          created_time: new Date(),
+          creator_name: 'system',
+          creator_id: 'system',
+          status: 'enabled',
+          user_type: 'admin',
+          name: '超级管理员',
+        },
+      ]);
     } catch (e) {
       console.log('--migrate up error', e);
     }

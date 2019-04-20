@@ -3,7 +3,12 @@ const _ = require('lodash');
 
 module.exports = {
   // 定义模型
-  defineModel(app, name, attributes) {
+  defineModel(
+    app,
+    name,
+    attributes,
+    attributes1 = { timestamps: false, freezeTableName: true }
+  ) {
     const attrs = {};
 
     for (const key in attributes) {
@@ -21,7 +26,8 @@ module.exports = {
 
     return app.model.define(
       name,
-      attrs || {
+      attrs,
+      attributes1 || {
         createdAt: new Date(),
         updatedAt: new Date(),
         freezeTableName: true,
