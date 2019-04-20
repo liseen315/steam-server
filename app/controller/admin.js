@@ -1,6 +1,6 @@
-const BaseController = require('../core/base_controller');
+const Controller = require('egg').Controller;
 
-class AdminController extends BaseController {
+class AdminController extends Controller {
   async login() {
     const { ctx, app } = this;
     const { username, password } = ctx.request.body;
@@ -10,8 +10,8 @@ class AdminController extends BaseController {
     if (!user) {
       return this.fail(ctx.ERROR_CODE, '账号或者密码错误');
     }
-
-    this.success(null);
+    console.log('-----',user.)
+    this.success({});
   }
 }
 

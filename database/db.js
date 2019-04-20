@@ -7,7 +7,7 @@ module.exports = {
     app,
     name,
     attributes,
-    attributes1 = { timestamps: false, freezeTableName: true }
+    attrs_default = { timestamps: false, freezeTableName: true }
   ) {
     const attrs = {};
 
@@ -27,7 +27,7 @@ module.exports = {
     return app.model.define(
       name,
       attrs,
-      attributes1 || {
+      attrs_default || {
         createdAt: new Date(),
         updatedAt: new Date(),
         freezeTableName: true,
