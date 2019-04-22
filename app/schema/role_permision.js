@@ -12,7 +12,7 @@ module.exports = app => {
       autoIncrement: true,
     },
     role_id: {
-      type: STRING(50),
+      type: INTEGER,
       allowNull: false,
     },
     permission_id: {

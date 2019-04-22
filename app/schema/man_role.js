@@ -12,7 +12,7 @@ module.exports = app => {
     },
     man_id: {
       // 管理员id
-      type: STRING(38),
+      type: INTEGER,
       allowNull: false,
     },
     role_id: {

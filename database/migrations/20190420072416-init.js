@@ -16,7 +16,7 @@ module.exports = {
         await queryInterface.createTable(fileName.replace('.js', ''), schema);
       }
 
-      // 首次进行migrate的时候创建超级管理员
+      // 首次进行migrate的时候创建超级管理用户
       await queryInterface.bulkInsert('manager', [
         {
           uuid: uuidv1(),
@@ -24,6 +24,41 @@ module.exports = {
           password: '5e89975ce4e20fa7adbde6b1cf70a61a',
           creator_name: 'system',
           creator_id: 'system',
+        },
+      ]);
+      // 创建超级管理角色
+      await queryInterface.bulkInsert('role', [
+        {
+          name: '超级管理员',
+        },
+      ]);
+      // 创建权限
+      await queryInterface.bulkInsert('permision', [
+        {
+          title: '用户管理',
+          path: '/manager/list',
+        },
+        {
+          title: '添加管理员',
+          path: '/manager/add',
+        },
+      ]);
+      // 创建管理员与角色对应关系
+      await queryInterface.bulkInsert('man_role', [
+        {
+          man_id: 1,
+          role_id: 1,
+        },
+      ]);
+      // 创建角色与权限对应关系
+      await queryInterface.bulkInsert('role_permision', [
+        {
+          role_id: 1,
+          permission_id: 1,
+        },
+        {
+          role_id: 1,
+          permission_id: 2,
         },
       ]);
     } catch (e) {
