@@ -1,8 +1,8 @@
 const db = require('../../database/db');
 
 module.exports = app => {
-  const adminSchema = require('../schema/admin.js')(app);
-  const Admin = db.defineModel(app, 'admin', adminSchema);
+  const managerSchema = require('../schema/manager.js')(app);
+  const Manager = db.defineModel(app, 'manager', managerSchema);
 
-  return Admin;
+  return Manager;
 };
