@@ -1,6 +1,6 @@
 'use strict';
 /**
- * 文件名字就是table名字
+ * 管理员表
  */
 module.exports = app => {
   const { INTEGER, STRING, BIGINT, DATE, UUIDV1, ENUM } = app.Sequelize;
