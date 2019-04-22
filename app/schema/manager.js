@@ -25,10 +25,6 @@ module.exports = app => {
       type: STRING(100),
       allowNull: false,
     },
-    created_time: {
-      type: DATE,
-      allowNull: false,
-    },
     creator_name: {
       type: STRING(76),
       allowNull: false,
@@ -37,18 +33,15 @@ module.exports = app => {
       type: STRING(38),
       allowNull: false,
     },
-    // enabled: '启用', disabled: '禁用'
+    // enabled: '启用1', disabled: '禁用0'
     status: {
-      type: ENUM('enabled', 'disabled'),
-      allowNull: false,
+      type: INTEGER,
+      defaultValue: 1,
     },
-    user_type: {
-      type: ENUM('admin'),
-      allowNull: false,
-    },
-    name: {
-      type: STRING(76),
-      allowNull: false,
+    // 是否是管理员,0非管理员,1管理员,因为只给内部人使用所有默认是管理
+    is_admin: {
+      type: INTEGER,
+      defaultValue: 1,
     },
   };
 };
