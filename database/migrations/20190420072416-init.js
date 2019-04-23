@@ -115,8 +115,6 @@ module.exports = {
     try {
       const files = fs.readdirSync(folderPath);
       for (const fileName of files) {
-        const filePath = path.join('../../app/schema/', fileName);
-        const schema = require(filePath)({ Sequelize });
         await queryInterface.dropTable(fileName.replace('.js', ''));
       }
     } catch (e) {
