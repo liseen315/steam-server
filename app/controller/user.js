@@ -19,7 +19,9 @@ class UserController extends BaseController {
     this.success({ token, expires: exp });
   }
 
-  async info() {}
+  async info() {
+    console.log('------get info');
+  }
 
   async logout() {}
 }
