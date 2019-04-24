@@ -20,7 +20,7 @@ class UserController extends BaseController {
   }
 
   async info() {
-    console.log('------get info');
+    console.log('-----------info------', this.ctx);
   }
 
   async logout() {}

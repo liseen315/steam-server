@@ -1,7 +1,7 @@
 const { STATUS_CODE } = require('../utils/status_code');
 module.exports = (options, app) => {
   async function verifyToken(token, app) {
-    const verifyResult = await new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       app.jwt.verify(token, app.jwt.secret, (err, decode) => {
         if (err) {
           resolve({ verity: false, message: err.message });
@@ -15,10 +15,11 @@ module.exports = (options, app) => {
     const authToken = ctx.header.authorization;
     if (authToken) {
       // 判断redis内的token是否过期
-      const isexp = await app.redis.get('default').get('authorization');
-      if (isexp) {
+      const notexp = await app.redis.get('default').get('authorization');
+      if (notexp) {
         const res = await verifyToken(authToken, app);
         if (res.verity) {
+          ctx.locals.userid = res.message.userid;
           await next();
         } else {
           // token 验证失败
