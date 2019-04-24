@@ -1,7 +1,6 @@
 const ignore = require('ignore');
 const { STATUS_CODE } = require('../utils/status_code');
 module.exports = (options, app) => {
-  console.log('----wocao---app----', app);
   async function verifyToken(token, app) {
     console.log('---thisapp----', app);
     const verifyResult = await new Promise((resovle, reject) => {
