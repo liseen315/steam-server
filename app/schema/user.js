@@ -38,10 +38,5 @@ module.exports = app => {
       type: INTEGER,
       defaultValue: 1,
     },
-    // 是否是管理员,0非管理员,1管理员,因为只给内部人使用所有默认是管理
-    is_admin: {
-      type: INTEGER,
-      defaultValue: 1,
-    },
   };
 };

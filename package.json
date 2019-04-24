@@ -16,6 +16,7 @@
     "egg-session-redis": "^2.1.0",
     "egg-validate": "^2.0.2",
     "fecha": "^3.0.3",
+    "ignore": "git+https://github.com/kaelzhang/node-ignore.git",
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
     "mysql2": "^1.6.5",

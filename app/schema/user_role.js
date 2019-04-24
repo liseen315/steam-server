@@ -10,9 +10,9 @@ module.exports = app => {
       primaryKey: true,
       autoIncrement: true,
     },
-    man_id: {
-      // 管理员id
-      type: INTEGER,
+    user_id: {
+      // 管理员uuid
+      type: STRING(38),
       allowNull: false,
     },
     role_id: {

@@ -5,6 +5,8 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  router.post('/api/manager/login', controller.manager.login);
-  router.post('/api/manager/loginout', controller.manager.loginout);
+  // const jwt = app.middleware.jwt();
+  router.post('/user/login', controller.user.login);
+  router.get('/user/info', controller.user.info);
+  router.post('/user/logout', controller.user.logout);
 };

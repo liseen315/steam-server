@@ -1,24 +1,24 @@
-'use strict';
-
 const { Controller } = require('egg');
-/**
- * 需要重构这里个基础的响应结构
- */
+const { STATUS_CODE } = require('../utils/status_code');
 class BaseController extends Controller {
-  success(data, status) {
-    this.ctx.body = { code: this.ctx.SUCCESS_CODE, data };
-    this.ctx.status = status || 200;
-  }
-
-  fail(code, message) {
-    this.ctx.body = { code, message };
+  success(data, msg) {
+    this.ctx.body = {
+      code: STATUS_CODE.SUCCESS,
+      message: msg || 'success',
+      body: data,
+    };
     this.ctx.status = 200;
   }
 
-  notFound(msg) {
-    msg = msg || 'not found';
-    this.ctx.throw(404, msg);
+  fail(msg) {
+    this.ctx.body = {
+      code: STATUS_CODE.FAIL,
+      message: msg || 'fail',
+    };
+    this.ctx.state = 200;
   }
+
+  notFound() {}
 }
 
 module.exports = BaseController;

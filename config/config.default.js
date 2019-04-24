@@ -16,8 +16,11 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1555731759199_796';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = [ 'jwt' ];
 
+  {
+    ('/user/info');
+  }
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
@@ -37,6 +40,22 @@ module.exports = appInfo => {
     username: 'root',
     password: 'Liseen315song',
     timezone: '+08:00',
+  };
+
+  exports.jwt = {
+    secret: 'Liseen315song',
+  };
+
+  config.redis = {
+    clients: {
+      default: {
+        host: 'localhost',
+        port: '6379',
+        password: 'Liseen315song',
+        db: '1',
+      },
+    },
+    agent: true,
   };
 
   return {
