@@ -10,11 +10,12 @@ class UserController extends BaseController {
     if (!targetUser) {
       return this.fail('账号或者密码错误');
     }
-    const { uuid } = targetUser;
-
-    const token = this.ctx.helper.createToken({ userid: uuid });
+    const { user_id } = targetUser;
+    const token = this.ctx.helper.createToken({ userid: user_id });
     const exp = Math.floor(Date.now() / 1000) + 7200;
-    await this.app.redis.get('default').setex('authorization', exp, token);
+    await this.app.redis
+      .get('default')
+      .setex(this.app.config.tokenKey, exp, token);
 
     this.success({ token, expires: exp });
   }
@@ -27,17 +28,21 @@ class UserController extends BaseController {
     }
 
     this.success({
-      userinfo: {
+      userInfo: {
         userName: uInfo.username,
-        userId: uInfo.uuid,
+        userId: userid,
         status: uInfo.status,
         createName: uInfo.creator_name,
         createId: uInfo.creator_id,
+        roleName: uInfo.roleName,
       },
     });
   }
 
-  async logout() {}
+  async logout() {
+    await this.app.redis.del(this.app.config.tokenKey);
+    this.success({}, '退出登录成功');
+  }
 }
 
 module.exports = UserController;

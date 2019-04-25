@@ -16,11 +16,11 @@ module.exports = {
         await queryInterface.createTable(fileName.replace('.js', ''), schema);
       }
 
-      const sadminUUID = uuidv1();
+      const uuid = uuidv1();
       // 首次进行migrate的时候创建超级管理用户
       await queryInterface.bulkInsert('user', [
         {
-          uuid: sadminUUID,
+          user_id: uuid,
           username: 'liseen',
           password: '5e89975ce4e20fa7adbde6b1cf70a61a',
           creator_name: 'system',
@@ -36,62 +36,54 @@ module.exports = {
       // 创建权限
       await queryInterface.bulkInsert('permission', [
         {
-          title: 'manager list',
+          title: '管理员列表',
           path: '/manager/list',
         },
         {
-          title: 'manager add',
+          title: '添加管理员',
           path: '/manager/add',
         },
         {
-          title: 'manager edit',
+          title: '编辑管理员',
           path: '/manager/edit',
         },
         {
-          title: 'role set',
-          path: '/manager/role',
-        },
-        {
-          title: 'role list',
+          title: '角色列表',
           path: '/manager/role/list',
         },
         {
-          title: 'role add',
+          title: '添加角色',
           path: '/manager/role/add',
         },
         {
-          title: 'role edit',
+          title: '编辑角色',
           path: '/manager/role/edit',
         },
         {
-          title: 'role permission',
-          path: '/manager/role/permission',
-        },
-        {
-          title: 'permission list',
+          title: '权限列表',
           path: '/manager/permision/list',
         },
         {
-          title: 'permission add',
+          title: '添加权限',
           path: '/manager/permision/add',
         },
         {
-          title: 'permission edit',
+          title: '编辑权限',
           path: '/manager/permision/edit',
         },
         {
-          title: 'spider list',
+          title: '爬虫列表',
           path: '/manager/spider/list',
         },
         {
-          title: 'spider edit',
+          title: '编辑爬虫',
           path: '/manager/spider/edit',
         },
       ]);
       // 创建管理员与角色对应关系
       await queryInterface.bulkInsert('user_role', [
         {
-          user_id: sadminUUID,
+          user_id: uuid,
           role_id: 1,
         },
       ]);

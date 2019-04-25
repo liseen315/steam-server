@@ -1,5 +1,4 @@
 const Service = require('egg').Service;
-const md5 = require('md5');
 
 class UserService extends Service {
   /**
@@ -8,19 +7,22 @@ class UserService extends Service {
    * @param {string} passWord
    */
   async userLogin(userName, passWord) {
-    return await this.ctx.model.User.findOne({
-      where: { username: userName, password: md5(passWord) },
-    });
+    return await this.ctx.model.User.login(userName, passWord);
   }
 
   /**
    * 用户信息查询
-   * @param {string} userid
+   * @param {string} userId
    */
-  async getuserInfo(userid) {
-    return await this.ctx.model.User.findOne({
-      where: { uuid: userid },
-    });
+  async getuserInfo(userId) {
+    const userInfo = await this.ctx.model.User.get(userId);
+
+    const roleId = await this.ctx.model.UserRole.getRoleIdByUserId(userId);
+
+    const roleName = await this.ctx.model.Role.getRoleName(roleId);
+
+    userInfo.roleName = roleName;
+    return userInfo;
   }
 }
 

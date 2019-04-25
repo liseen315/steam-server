@@ -15,7 +15,7 @@ module.exports = (options, app) => {
     const authToken = ctx.header.authorization;
     if (authToken) {
       // 判断redis内的token是否过期
-      const notexp = await app.redis.get('default').get('authorization');
+      const notexp = await app.redis.get('default').get(app.config.tokenKey);
       if (notexp) {
         const res = await verifyToken(authToken, app);
         if (res.verity) {

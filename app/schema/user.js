@@ -11,7 +11,7 @@ module.exports = app => {
       primaryKey: true,
       autoIncrement: true,
     },
-    uuid: {
+    user_id: {
       type: STRING(38),
       allowNull: false,
       defaultValue: UUIDV1,

@@ -21,6 +21,7 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
+    tokenKey: 'authorization',
   };
 
   config.security = {
@@ -37,6 +38,7 @@ module.exports = appInfo => {
     username: 'root',
     password: 'Liseen315song',
     timezone: '+08:00',
+    operatorsAliases: false, // 加上这个才能不报symbol的警告...
   };
 
   exports.jwt = {
