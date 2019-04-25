@@ -40,7 +40,7 @@ class UserController extends BaseController {
   }
 
   async logout() {
-    await this.app.redis.del(this.app.config.tokenKey);
+    await this.app.redis.get('default').del(this.app.config.tokenKey);
     this.success({}, '退出登录成功');
   }
 }
