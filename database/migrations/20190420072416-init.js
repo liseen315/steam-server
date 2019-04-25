@@ -30,7 +30,7 @@ module.exports = {
       // 创建超级管理角色
       await queryInterface.bulkInsert('role', [
         {
-          name: 'superAdmin',
+          name: 'super_admin',
         },
       ]);
       // 创建权限

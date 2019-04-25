@@ -20,7 +20,21 @@ class UserController extends BaseController {
   }
 
   async info() {
-    console.log('-----------info------', this.ctx);
+    const userid = this.ctx.locals.userid;
+    const uInfo = await this.ctx.service.user.getuserInfo(userid);
+    if (!uInfo) {
+      return this.fail('没有此用户');
+    }
+
+    this.success({
+      userinfo: {
+        userName: uInfo.username,
+        userId: uInfo.uuid,
+        status: uInfo.status,
+        createName: uInfo.creator_name,
+        createId: uInfo.creator_id,
+      },
+    });
   }
 
   async logout() {}

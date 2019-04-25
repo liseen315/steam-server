@@ -32,7 +32,10 @@ module.exports = (options, app) => {
         ctx.body = { code: STATUS_CODE.TOKEN_EXP, message: 'token过期' };
       }
     } else {
-      ctx.body = { code: STATUS_CODE.LOGIN_FIRST, message: '请登录后进行操作' };
+      ctx.body = {
+        code: STATUS_CODE.TOKEN_NOTFOUND,
+        message: '请登录后进行操作',
+      };
     }
   };
 };
