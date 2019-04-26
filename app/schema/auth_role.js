@@ -10,7 +10,7 @@ module.exports = app => {
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: {
+    auth_id: {
       // 管理员uuid
       type: STRING(38),
       allowNull: false,

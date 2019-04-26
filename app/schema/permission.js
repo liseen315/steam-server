@@ -11,13 +11,5 @@ module.exports = app => {
       primaryKey: true,
       autoIncrement: true,
     },
-    title: {
-      type: STRING(50),
-      allowNull: false,
-    },
-    path: {
-      type: TEXT,
-      allowNull: false,
-    },
   };
 };

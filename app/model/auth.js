@@ -1,14 +1,14 @@
 const db = require('../../database/db');
 const md5 = require('md5');
 module.exports = app => {
-  const userSchema = require('../schema/user.js')(app);
-  const User = db.defineModel(app, 'user', userSchema);
+  const authSchema = require('../schema/auth.js')(app);
+  const Auth = db.defineModel(app, 'user', authSchema);
 
   /**
    * login
    */
-  User.login = async (userName, passWord) => {
-    return await User.findOne({
+  Auth.login = async (userName, passWord) => {
+    return await Auth.findOne({
       where: { username: userName, password: md5(passWord) },
     });
   };
@@ -16,11 +16,11 @@ module.exports = app => {
   /**
    * 根据userid获取user
    */
-  User.get = async userId => {
+  Auth.get = async userId => {
     return await User.findOne({
       where: { user_id: userId },
     });
   };
 
-  return User;
+  return Auth;
 };

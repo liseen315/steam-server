@@ -1,6 +1,6 @@
 const BaseController = require('../core/base_controller');
 
-class UserController extends BaseController {
+class AuthController extends BaseController {
   async login() {
     const { userName, passWord } = this.ctx.request.body;
     const targetUser = await this.ctx.service.user.userLogin(
@@ -39,10 +39,12 @@ class UserController extends BaseController {
     });
   }
 
+  async changepw() {}
+
   async logout() {
     await this.app.redis.get('default').del(this.app.config.tokenKey);
     this.success({}, '退出登录成功');
   }
 }
 
-module.exports = UserController;
+module.exports = AuthController;
