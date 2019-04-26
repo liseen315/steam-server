@@ -3,7 +3,7 @@
  * 管理员表
  */
 module.exports = app => {
-  const { INTEGER, STRING, BIGINT, DATE, UUIDV1, ENUM } = app.Sequelize;
+  const { INTEGER, STRING, DATE, UUIDV1 } = app.Sequelize;
 
   return {
     id: {
@@ -25,18 +25,22 @@ module.exports = app => {
       type: STRING(100),
       allowNull: false,
     },
-    creator_name: {
-      type: STRING(76),
-      allowNull: false,
+    role_id: {
+      type: INTEGER,
+      defaultValue: 0,
     },
-    creator_id: {
-      type: STRING(38),
-      allowNull: false,
-    },
-    // enabled: '启用1', disabled: '禁用0'
+    // enabled: '1有效', disabled: '2无效'
     status: {
       type: INTEGER,
       defaultValue: 1,
+    },
+    createdAt: {
+      type: DATE,
+      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    updatedAt: {
+      type: DATE,
+      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP'),
     },
   };
 };

@@ -1,13 +1,13 @@
 'use strict';
 const _ = require('lodash');
-
+// timestamps: false
 module.exports = {
   // 定义模型
   defineModel(
     app,
     name,
     attributes,
-    attrs_default = { timestamps: false, freezeTableName: true }
+    attrs_default = { freezeTableName: true }
   ) {
     const attrs = {};
 

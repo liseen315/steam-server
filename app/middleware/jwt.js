@@ -13,6 +13,7 @@ module.exports = (options, app) => {
   }
   return async function userInterceptor(ctx, next) {
     const authToken = ctx.header.authorization;
+    // 这里需要过滤掉login logout白名单的路由
     if (authToken) {
       // 判断redis内的token是否过期
       const notexp = await app.redis.get('default').get(app.config.tokenKey);

@@ -38,6 +38,7 @@ module.exports = appInfo => {
     username: 'root',
     password: 'Liseen315song',
     timezone: '+08:00',
+    pool: { maxConnections: 5, maxIdleTime: 30 },
     operatorsAliases: false, // 加上这个才能不报symbol的警告...
   };
 

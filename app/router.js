@@ -6,8 +6,8 @@
 module.exports = app => {
   const { router, controller } = app;
   const jwt = app.middleware.jwt({}, app);
-  router.post('/auth/login', controller.auth.login);
-  router.get('/auth/info', jwt, controller.auth.info);
-  router.post('/auth/changepw', jwt, controller.auth.changepw);
-  router.post('/auth/logout', jwt, controller.auth.logout);
+  router.post('/sysuser/login', controller.sysuser.login);
+  // router.get('/sysuser/info', jwt, controller.auth.info);
+  // router.post('/sysuser/changepw', jwt, controller.auth.changepw);
+  // router.post('/sysuser/logout', jwt, controller.auth.logout);
 };

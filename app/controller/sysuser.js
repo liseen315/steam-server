@@ -1,6 +1,6 @@
 const BaseController = require('../core/base_controller');
 
-class AuthController extends BaseController {
+class SysUserController extends BaseController {
   async login() {
     const { userName, passWord } = this.ctx.request.body;
     const targetUser = await this.ctx.service.user.userLogin(
@@ -47,4 +47,4 @@ class AuthController extends BaseController {
   }
 }
 
-module.exports = AuthController;
+module.exports = SysUserController;
