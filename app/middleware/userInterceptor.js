@@ -15,7 +15,7 @@ module.exports = (options, app) => {
    * user 拦截器 用于验证jwttoken
    */
   return async function userInterceptor(ctx, next) {
-    const authToken = ctx.header.authorization;
+    const authToken = ctx.header.auth;
     console.log('--userInterceptor---', ctx.url);
     const whiteList = [ '/sysuser/login', '/sysuser/logout' ];
     if (whiteList.includes(ctx.url)) {

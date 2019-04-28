@@ -8,14 +8,14 @@ module.exports = app => {
    * 获取可用状态的角色名
    */
   SysRole.getRoleName = async roleId => {
-    const role = await Role.findOne({
+    const role = await SysRole.findOne({
       where: {
         id: roleId,
         status: 1,
       },
     });
 
-    return role.name;
+    return role.role_name;
   };
 
   return SysRole;

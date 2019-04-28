@@ -21,6 +21,10 @@ class SysUserService extends Service {
       userInfo.role_id
     );
 
+    const roleName = await this.ctx.service.sysRole.getRoleName(
+      userInfo.role_id
+    );
+
     const menuAndPermissions = await this.ctx.service.sysPermission.getMenuAndPermissions(
       idList
     );
@@ -29,10 +33,10 @@ class SysUserService extends Service {
       userName: userInfo.username,
       userId: userInfo.user_id,
       status: userInfo.status,
+      roleName,
       menus: menuAndPermissions.menuList,
       permissions: menuAndPermissions.permissionList,
     };
-
     return converInfo;
   }
 
