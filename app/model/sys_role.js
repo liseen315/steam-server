@@ -1,13 +1,13 @@
 const db = require('../../database/db');
 
 module.exports = app => {
-  const roleSchema = require('../schema/role.js')(app);
-  const Role = db.defineModel(app, 'role', roleSchema);
+  const sysRoleSchema = require('../schema/sys_role.js')(app);
+  const SysRole = db.defineModel(app, 'sys_role', sysRoleSchema);
 
   /**
    * 获取可用状态的角色名
    */
-  Role.getRoleName = async roleId => {
+  SysRole.getRoleName = async roleId => {
     const role = await Role.findOne({
       where: {
         id: roleId,
@@ -18,5 +18,5 @@ module.exports = app => {
     return role.name;
   };
 
-  return Role;
+  return SysRole;
 };

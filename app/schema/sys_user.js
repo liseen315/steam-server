@@ -34,11 +34,11 @@ module.exports = app => {
       type: INTEGER,
       defaultValue: 1,
     },
-    createdAt: {
+    created_at: {
       type: DATE,
       defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP'),
     },
-    updatedAt: {
+    updated_at: {
       type: DATE,
       defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP'),
     },

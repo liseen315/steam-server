@@ -28,6 +28,52 @@ module.exports = {
           role_id: 1,
         },
       ]);
+
+      // 创建角色
+      await queryInterface.bulkInsert('sys_role', [
+        {
+          role_name: 'super_admin',
+        },
+      ]);
+      // 创建基础权限
+      await queryInterface.bulkInsert('sys_permission', [
+        {
+          menu_code: 'sys_user',
+          menu_name: '系统用户',
+          permission_code: 'sys:user:list',
+          permission_name: '系统用户列表',
+          require: 1,
+        },
+        {
+          menu_code: 'sys_user',
+          menu_name: '系统用户',
+          permission_code: 'sys:user:add',
+          permission_name: '新增系统用户',
+          require: 2,
+        },
+        {
+          menu_code: 'sys_user',
+          menu_name: '系统用户',
+          permission_code: 'sys:user:update',
+          permission_name: '修改系统用户',
+          require: 2,
+        },
+      ]);
+
+      await queryInterface.bulkInsert('sys_role_permission', [
+        {
+          role_id: 1,
+          permission_id: 1,
+        },
+        {
+          role_id: 1,
+          permission_id: 2,
+        },
+        {
+          role_id: 1,
+          permission_id: 3,
+        },
+      ]);
     } catch (e) {
       console.log('migrate up error', e);
     }

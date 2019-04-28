@@ -11,8 +11,17 @@ module.exports = (options, app) => {
       });
     });
   }
+  /**
+   * user 拦截器 用于验证jwttoken
+   */
   return async function userInterceptor(ctx, next) {
     const authToken = ctx.header.authorization;
+    console.log('--userInterceptor---', ctx.url);
+    const whiteList = [ '/sysuser/login', '/sysuser/logout' ];
+    if (whiteList.includes(ctx.url)) {
+      await next();
+      return;
+    }
     // 这里需要过滤掉login logout白名单的路由
     if (authToken) {
       // 判断redis内的token是否过期
@@ -20,7 +29,7 @@ module.exports = (options, app) => {
       if (notexp) {
         const res = await verifyToken(authToken, app);
         if (res.verity) {
-          ctx.locals.userid = res.message.userid;
+          ctx.locals.userId = res.message.userId;
           await next();
         } else {
           // token 验证失败

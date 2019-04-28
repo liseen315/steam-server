@@ -28,8 +28,8 @@ module.exports = {
       name,
       attrs,
       attrs_default || {
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: app.Sequelize.literal('CURRENT_TIMESTAMP'),
+        updatedAt: app.Sequelize.literal('CURRENT_TIMESTAMP'),
         freezeTableName: true,
         getterMethods: {
           createdTime() {

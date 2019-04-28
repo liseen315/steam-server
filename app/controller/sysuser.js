@@ -3,43 +3,52 @@ const BaseController = require('../core/base_controller');
 class SysUserController extends BaseController {
   async login() {
     const { userName, passWord } = this.ctx.request.body;
-    const targetUser = await this.ctx.service.user.userLogin(
-      userName,
-      passWord
-    );
+
+    if (typeof userName === 'undefined' || typeof passWord === 'undefined') {
+      return this.fail('参数错误');
+    }
+    const targetUser = await this.ctx.service.sysUser.login(userName, passWord);
     if (!targetUser) {
       return this.fail('账号或者密码错误');
     }
     const { user_id } = targetUser;
-    const token = this.ctx.helper.createToken({ userid: user_id });
+    // 创建token
+    const token = this.ctx.helper.createToken({ userId: user_id });
+    // 生成redis过期时间
     const exp = Math.floor(Date.now() / 1000) + 7200;
     await this.app.redis
       .get('default')
       .setex(this.app.config.tokenKey, exp, token);
 
+    // 响应
     this.success({ token, expires: exp });
   }
 
   async info() {
-    const userid = this.ctx.locals.userid;
-    const uInfo = await this.ctx.service.user.getuserInfo(userid);
+    const userId = this.ctx.locals.userId;
+    const uInfo = await this.ctx.service.sysUser.getInfo(userId);
     if (!uInfo) {
       return this.fail('没有此用户');
     }
 
-    this.success({
-      userInfo: {
-        userName: uInfo.username,
-        userId: userid,
-        status: uInfo.status,
-        createName: uInfo.creator_name,
-        createId: uInfo.creator_id,
-        roleName: uInfo.roleName,
-      },
-    });
+    const userInfo = {
+      nickname: uInfo.userName,
+    };
+
+    this.success(uInfo);
   }
 
-  async changepw() {}
+  async changepw() {
+    const userId = this.ctx.locals.userId;
+    const { newPassWord } = this.ctx.request.body;
+    const changeOk = await this.ctx.service.sysUser.changePw(newPassWord);
+
+    if (changeOk) {
+      this.success({}, '修改密码成功');
+    } else {
+      this.fail('修改密码失败');
+    }
+  }
 
   async logout() {
     await this.app.redis.get('default').del(this.app.config.tokenKey);
