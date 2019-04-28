@@ -5,7 +5,10 @@ class SysRolePermissionService extends Service {
     const permisions = await this.ctx.model.SysRolePermission.getPermissionIdByRoleId(
       roleId
     );
-    return permisions;
+
+    const idList = permisions.map(item => item.permission_id);
+
+    return idList;
   }
 }
 

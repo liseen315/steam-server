@@ -19,6 +19,7 @@ module.exports = app => {
       where: {
         role_id: roleId,
       },
+      raw: true,
     });
   };
 

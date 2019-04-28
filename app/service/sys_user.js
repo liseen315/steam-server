@@ -17,22 +17,23 @@ class SysUserService extends Service {
   async getInfo(userId) {
     const userInfo = await this.ctx.model.SysUser.getInfo(userId);
     // 重新组合新的userInfo
-    const permissionIds = await this.ctx.service.sysRolePermission.getPermisionIds(
+    const idList = await this.ctx.service.sysRolePermission.getPermisionIds(
       userInfo.role_id
     );
 
-    const pIds = [];
-    permissionIds.map(item => {
-      pIds.push(item.permission_id);
-    });
-    const permisions = await this.ctx.model.SysPermission.getPermisionByIdList(
-      pIds
+    const menuAndPermissions = await this.ctx.service.sysPermission.getMenuAndPermissions(
+      idList
     );
 
-    console.log('--permisions--', permisions);
+    const converInfo = {
+      userName: userInfo.username,
+      userId: userInfo.user_id,
+      status: userInfo.status,
+      menus: menuAndPermissions.menuList,
+      permissions: menuAndPermissions.permissionList,
+    };
 
-    // console.log('--permissionIds--',permissionIds)
-    return userInfo;
+    return converInfo;
   }
 
   async changePw(newPassWord) {
