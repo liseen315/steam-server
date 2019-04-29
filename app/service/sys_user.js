@@ -42,13 +42,8 @@ class SysUserService extends Service {
 
   async changePw(newPassWord) {
     const userId = this.ctx.locals.userId;
-    const user = await this.ctx.model.SysUser.getInfo(userId);
-    const changeOk = false;
-    if (user) {
-      changeOk = true;
-    } else {
-      return changeOk;
-    }
+    const changed = await this.ctx.model.SysUser.changePw(userId, newPassWord);
+    return changed;
   }
 }
 

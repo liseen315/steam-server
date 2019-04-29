@@ -39,8 +39,8 @@ class SysUserController extends BaseController {
   }
 
   async changepw() {
-    const userId = this.ctx.locals.userId;
     const { newPassWord } = this.ctx.request.body;
+
     const changeOk = await this.ctx.service.sysUser.changePw(newPassWord);
 
     if (changeOk) {

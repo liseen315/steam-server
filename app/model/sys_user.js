@@ -22,8 +22,15 @@ module.exports = app => {
     });
   };
 
-  SysUser.changePw = async newPassWord => {
-    // await SysUser.
+  SysUser.changePw = async (userId, newPassWord) => {
+    return await SysUser.update(
+      { password: md5(newPassWord) },
+      {
+        where: {
+          user_id: userId,
+        },
+      }
+    );
   };
 
   return SysUser;
