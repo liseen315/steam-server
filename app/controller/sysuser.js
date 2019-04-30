@@ -1,6 +1,9 @@
 const BaseController = require('../core/base_controller');
 
 class SysUserController extends BaseController {
+  /**
+   * 登录
+   */
   async login() {
     const { userName, passWord } = this.ctx.request.body;
 
@@ -24,6 +27,9 @@ class SysUserController extends BaseController {
     this.success({ token, expires: exp });
   }
 
+  /**
+   * 获取用户信息
+   */
   async info() {
     const userId = this.ctx.locals.userId;
     const uInfo = await this.ctx.service.sysUser.getInfo(userId);
@@ -37,7 +43,9 @@ class SysUserController extends BaseController {
 
     this.success(uInfo);
   }
-
+  /**
+   * 更换密码
+   */
   async changepw() {
     const { newPassWord } = this.ctx.request.body;
 
@@ -50,6 +58,9 @@ class SysUserController extends BaseController {
     }
   }
 
+  /**
+   * 登出
+   */
   async logout() {
     await this.app.redis.get('default').del(this.app.config.tokenKey);
     this.success({});
@@ -59,7 +70,9 @@ class SysUserController extends BaseController {
     const userList = await this.ctx.service.sysUser.getList();
     this.success(userList);
   }
-
+  /**
+   * 添加新管理员
+   */
   async addUser() {
     const { userName, passWord, roleId } = this.ctx.request.body;
     const newUserId = await this.ctx.service.sysUser.addUser({
@@ -69,6 +82,11 @@ class SysUserController extends BaseController {
     });
     this.success({ userId: newUserId });
   }
+
+  /**
+   * 删除管理员 需要验证不能删除超级管理
+   */
+  async destroyUser() {}
 }
 
 module.exports = SysUserController;

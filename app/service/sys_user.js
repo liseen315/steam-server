@@ -42,12 +42,19 @@ class SysUserService extends Service {
     return converInfo;
   }
 
+  /**
+   * 更改密码
+   * @param {String} newPassWord
+   */
   async changePw(newPassWord) {
     const userId = this.ctx.locals.userId;
     const changed = await this.ctx.model.SysUser.changePw(userId, newPassWord);
     return changed;
   }
 
+  /**
+   * 获取!超级管理的所有管理
+   */
   async getList() {
     const userId = this.ctx.locals.userId;
     const list = await this.ctx.model.SysUser.getList(userId);
@@ -76,6 +83,10 @@ class SysUserService extends Service {
     return converList;
   }
 
+  /**
+   * 添加新管理员
+   * @param {Object} newUserInfo
+   */
   async addUser(newUserInfo) {
     const converInfo = {
       user_id: uuidv1(),
@@ -86,6 +97,12 @@ class SysUserService extends Service {
     const newUserId = await this.ctx.model.SysUser.addUser(converInfo);
     return newUserId;
   }
+
+  /**
+   * 删除管理员
+   * @param {*} userId
+   */
+  async destroy(userId) {}
 }
 
 module.exports = SysUserService;

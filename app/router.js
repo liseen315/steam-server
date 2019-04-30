@@ -12,6 +12,7 @@ module.exports = app => {
   router.post('/sysuser/logout', controller.sysUser.logout);
   router.get('/sysuser/list', controller.sysUser.list);
   router.post('/sysuser/add', controller.sysUser.addUser);
+  router.post('/sysuser/destroy', controller.sysUser.destroyUser);
   // 角色
   router.get('/sysrole/rolelist', controller.sysRole.list);
 };
