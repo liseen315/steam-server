@@ -44,7 +44,7 @@ class SysUserController extends BaseController {
     const changeOk = await this.ctx.service.sysUser.changePw(newPassWord);
 
     if (changeOk) {
-      this.success({}, '修改密码成功');
+      this.success({});
     } else {
       this.fail('修改密码失败');
     }
@@ -52,7 +52,22 @@ class SysUserController extends BaseController {
 
   async logout() {
     await this.app.redis.get('default').del(this.app.config.tokenKey);
-    this.success({}, '退出登录成功');
+    this.success({});
+  }
+
+  async list() {
+    const userList = await this.ctx.service.sysUser.getList();
+    this.success(userList);
+  }
+
+  async addUser() {
+    const { userName, passWord, roleId } = this.ctx.request.body;
+    const newUserId = await this.ctx.service.sysUser.addUser({
+      userName,
+      passWord,
+      roleId,
+    });
+    this.success({ userId: newUserId });
   }
 }
 

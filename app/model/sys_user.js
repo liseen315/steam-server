@@ -33,5 +33,23 @@ module.exports = app => {
     );
   };
 
+  SysUser.getList = async userId => {
+    // 排除掉超级管理员
+    const Op = app.Sequelize.Op;
+    return await SysUser.findAll({
+      where: {
+        user_id: {
+          [Op.ne]: userId,
+        },
+      },
+    });
+  };
+
+  SysUser.addUser = async newUserInfo => {
+    console.log('--addUser----', newUserInfo);
+    const result = await SysUser.create(newUserInfo);
+    return result.user_id;
+  };
+
   return SysUser;
 };

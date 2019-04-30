@@ -10,4 +10,8 @@ module.exports = app => {
   router.get('/sysuser/info', controller.sysUser.info);
   router.post('/sysuser/changepw', controller.sysUser.changepw);
   router.post('/sysuser/logout', controller.sysUser.logout);
+  router.get('/sysuser/list', controller.sysUser.list);
+  router.post('/sysuser/add', controller.sysUser.addUser);
+  // 角色
+  router.get('/sysrole/rolelist', controller.sysRole.list);
 };

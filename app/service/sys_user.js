@@ -1,5 +1,7 @@
 const Service = require('egg').Service;
-
+const moment = require('moment');
+const uuidv1 = require('uuid/v1');
+const md5 = require('md5');
 class SysUserService extends Service {
   /**
    * 用户登录查询
@@ -44,6 +46,45 @@ class SysUserService extends Service {
     const userId = this.ctx.locals.userId;
     const changed = await this.ctx.model.SysUser.changePw(userId, newPassWord);
     return changed;
+  }
+
+  async getList() {
+    const userId = this.ctx.locals.userId;
+    const list = await this.ctx.model.SysUser.getList(userId);
+
+    const converList = await Promise.all(
+      list.map(async userItem => {
+        const rName = await this.ctx.service.sysRole.getRoleName(
+          userItem.role_id
+        );
+
+        return {
+          userName: userItem.username,
+          createAt: moment(userItem.created_at)
+            .utc()
+            .format('YYYY-MM-DD'),
+          updateAt: moment(userItem.updated_at)
+            .utc()
+            .format('YYYY-MM-DD'),
+          status: userItem.status,
+          roleId: userItem.role_id,
+          roleName: rName,
+        };
+      })
+    );
+
+    return converList;
+  }
+
+  async addUser(newUserInfo) {
+    const converInfo = {
+      user_id: uuidv1(),
+      username: newUserInfo.userName,
+      password: md5(newUserInfo.passWord),
+      role_id: newUserInfo.roleId,
+    };
+    const newUserId = await this.ctx.model.SysUser.addUser(converInfo);
+    return newUserId;
   }
 }
 
