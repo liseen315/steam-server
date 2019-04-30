@@ -66,6 +66,7 @@ class SysUserService extends Service {
         );
 
         return {
+          userId: userItem.user_id,
           userName: userItem.username,
           createAt: moment(userItem.created_at)
             .utc()
@@ -102,7 +103,18 @@ class SysUserService extends Service {
    * 删除管理员
    * @param {*} userId
    */
-  async destroy(userId) {}
+  async destroy(userId) {
+    const userInfo = await this.ctx.model.SysUser.getInfo(userId);
+    if (!userInfo) {
+      return null;
+    }
+    // 超级管理
+    if (userInfo.role_id === 1) {
+      const error = new Error('禁止删除超级管理');
+      error.status = 422;
+      throw error;
+    }
+  }
 }
 
 module.exports = SysUserService;

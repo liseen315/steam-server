@@ -65,7 +65,9 @@ class SysUserController extends BaseController {
     await this.app.redis.get('default').del(this.app.config.tokenKey);
     this.success({});
   }
-
+  /**
+   * 获取管理员列表
+   */
   async list() {
     const userList = await this.ctx.service.sysUser.getList();
     this.success(userList);
@@ -86,7 +88,15 @@ class SysUserController extends BaseController {
   /**
    * 删除管理员 需要验证不能删除超级管理
    */
-  async destroyUser() {}
+  async removeUser() {
+    const { userId } = this.ctx.request.body;
+    const result = await this.ctx.service.sysUser.destroy(userId);
+    if (result) {
+      this.success(result);
+    } else {
+      this.fail('删除管理失败');
+    }
+  }
 }
 
 module.exports = SysUserController;

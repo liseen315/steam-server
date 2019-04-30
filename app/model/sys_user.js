@@ -45,8 +45,10 @@ module.exports = app => {
     });
   };
 
+  /**
+   * 添加管理员记录
+   */
   SysUser.addUser = async newUserInfo => {
-    console.log('--addUser----', newUserInfo);
     const result = await SysUser.create(newUserInfo);
     return result.user_id;
   };
