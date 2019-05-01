@@ -18,6 +18,12 @@ class SysUserService extends Service {
    */
   async getInfo(userId) {
     const userInfo = await this.ctx.model.SysUser.getInfo(userId);
+
+    if (!userInfo) {
+      const error = new Error('找不到指定的管理');
+      error.status = 422;
+      throw error;
+    }
     // 重新组合新的userInfo
     const idList = await this.ctx.service.sysRolePermission.getPermisionIds(
       userInfo.role_id
@@ -105,8 +111,11 @@ class SysUserService extends Service {
    */
   async destroy(userId) {
     const userInfo = await this.ctx.model.SysUser.getInfo(userId);
+
     if (!userInfo) {
-      return null;
+      const error = new Error('找不到指定的管理');
+      error.status = 422;
+      throw error;
     }
     // 超级管理
     if (userInfo.role_id === 1) {
@@ -114,6 +123,12 @@ class SysUserService extends Service {
       error.status = 422;
       throw error;
     }
+
+    const result = await this.ctx.model.SysUser.destroyById(userId);
+
+    this.ctx.helper.checkDelete(result);
+
+    return result;
   }
 }
 

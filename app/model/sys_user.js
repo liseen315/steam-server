@@ -53,5 +53,17 @@ module.exports = app => {
     return result.user_id;
   };
 
+  /**
+   * 删除管理员
+   */
+  SysUser.destroyById = async userId => {
+    const result = await SysUser.destroy({
+      where: {
+        user_id: userId,
+      },
+    });
+    return result;
+  };
+
   return SysUser;
 };
