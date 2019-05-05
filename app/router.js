@@ -15,4 +15,8 @@ module.exports = app => {
   router.post('/sysuser/remove', controller.sysUser.removeUser);
   // 角色
   router.get('/sysrole/rolelist', controller.sysRole.list);
+
+  // 微信小程序
+
+  router.post('/weapp/login', controller.weApp.login);
 };

@@ -138,3 +138,10 @@ sudo security add-trusted-cert \
 /usr/local/etc/nginx/ssl/ssl.crt
 
 ```
+
+### 当前存在的问题
+
+- redis 的 token 过期问题
+- 权限系统的后端 permission 限制
+- redis 现在还没有配置密码
+- 中间件的过滤问题

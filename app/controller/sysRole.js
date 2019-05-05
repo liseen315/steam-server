@@ -5,6 +5,8 @@ class SysRoleController extends BaseController {
     const roleList = await this.ctx.service.sysRole.getList();
     this.success(roleList);
   }
+
+  async addRole() {}
 }
 
 module.exports = SysRoleController;

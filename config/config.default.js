@@ -29,6 +29,10 @@ module.exports = appInfo => {
       enable: false,
     },
   };
+  // 所有的weapp的接口都不走user拦截中间件
+  config.userInterceptor = {
+    ignore: '/weapp',
+  };
 
   config.sequelize = {
     dialect: 'mysql',
