@@ -17,7 +17,7 @@ module.exports = (options, app) => {
   return async function userInterceptor(ctx, next) {
     const authToken = ctx.header.auth;
     console.log('--userInterceptor---', ctx.url);
-    const whiteList = [ '/sysuser/login', '/sysuser/logout' ];
+    const whiteList = ['/sysuser/login', '/sysuser/logout'];
     if (whiteList.includes(ctx.url)) {
       await next();
       return;

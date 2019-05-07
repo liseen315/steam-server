@@ -18,7 +18,8 @@ class SysUserController extends BaseController {
     // 创建token
     const token = this.ctx.helper.createToken({ userId: user_id });
     // 生成redis过期时间
-    const exp = Math.floor(Date.now() / 1000) + 7200;
+    // const exp = Math.floor(Date.now() / 1000) + 60;
+    const exp = 7200 // 2小时过期时间
     await this.app.redis
       .get('default')
       .setex(this.app.config.tokenKey, exp, token);
