@@ -1,6 +1,6 @@
 /* eslint valid-jsdoc: "off" */
 
-'use strict';
+'use strict'
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -10,29 +10,29 @@ module.exports = appInfo => {
    * built-in config
    * @type {Egg.EggAppConfig}
    **/
-  const config = {};
+  const config = {}
 
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1555731759199_796';
+  config.keys = appInfo.name + '_1555731759199_796'
 
   // add your middleware config here
-  config.middleware = [ 'userInterceptor', 'errorHandler' ];
+  config.middleware = ['userInterceptor', 'errorHandler']
 
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
-    tokenKey: 'authorization',
-  };
+    tokenKey: 'authorization'
+  }
 
   config.security = {
     csrf: {
-      enable: false,
-    },
-  };
+      enable: false
+    }
+  }
   // 所有的weapp的接口都不走user拦截中间件
   config.userInterceptor = {
-    ignore: '/weapp',
-  };
+    ignore: '/weapp'
+  }
 
   config.sequelize = {
     dialect: 'mysql',
@@ -43,12 +43,12 @@ module.exports = appInfo => {
     password: 'Liseen315song',
     timezone: '+08:00',
     pool: { maxConnections: 5, maxIdleTime: 30 },
-    operatorsAliases: false, // 加上这个才能不报symbol的警告...
-  };
+    operatorsAliases: false // 加上这个才能不报symbol的警告...
+  }
 
   exports.jwt = {
-    secret: 'Liseen315song',
-  };
+    secret: 'Liseen315song'
+  }
 
   config.redis = {
     clients: {
@@ -56,14 +56,14 @@ module.exports = appInfo => {
         host: 'localhost',
         port: '6379',
         password: 'Liseen315song',
-        db: '1',
-      },
+        db: '1'
+      }
     },
-    agent: true,
-  };
+    agent: true
+  }
 
   return {
     ...config,
-    ...userConfig,
-  };
-};
+    ...userConfig
+  }
+}

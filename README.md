@@ -47,6 +47,19 @@ npx sequelize db:migrate
 # npx sequelize db:migrate:undo:all
 ```
 
+### 种子数据
+
+```bash
+# 创建种子
+npx sequelize seed:generate --name demo-user
+# 生成种子数据
+npx sequelize db:seed:all
+# 撤销单次种子
+npx sequelize db:seed:undo
+# 撤销所有种子
+npx sequelize db:seed:undo:all
+```
+
 ### nginx 配置 ssl 以及反向代理
 
 ```
@@ -141,7 +154,5 @@ sudo security add-trusted-cert \
 
 ### 当前存在的问题
 
-- redis 的 token 过期问题
 - 权限系统的后端 permission 限制
 - redis 现在还没有配置密码
-- 中间件的过滤问题
