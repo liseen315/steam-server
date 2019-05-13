@@ -2,7 +2,7 @@ const Service = require('egg').Service
 const crypto = require('crypto')
 const _ = require('lodash')
 
-class WeappService extends Service {
+class WeUserService extends Service {
   async code2session (code, fullUserInfo) {
     try {
       const sessionData = await this.ctx.curl(
@@ -18,7 +18,6 @@ class WeappService extends Service {
       if (!sessionData.data.openid) {
         return null
       }
-      console.log('---sessionData---', sessionData)
       // 验证用户信息完整性
       const sha1 = crypto
         .createHash('sha1')
@@ -26,7 +25,7 @@ class WeappService extends Service {
         .digest('hex')
 
       if (fullUserInfo.signature !== sha1) {
-        console.log('--sha1--')
+        console.log('we_user session验证失败-')
         return null
       }
 
@@ -37,7 +36,7 @@ class WeappService extends Service {
         fullUserInfo.iv
       )
       if (_.isEmpty(wechatUserInfo)) {
-        console.log('---wechatUserInfo--')
+        console.log('---wechatUserInfo-isEmpty-')
         return null
       }
 
@@ -48,4 +47,4 @@ class WeappService extends Service {
   }
 }
 
-module.exports = WeappService
+module.exports = WeUserService

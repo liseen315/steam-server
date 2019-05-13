@@ -13,6 +13,22 @@ module.exports = app => {
       unique: true
     },
     nick_name: {
+      type: STRING
+    },
+    gender: {
+      type: INTEGER,
+      defaultValue: 0
+    },
+    avatar: {
+      type: STRING
+    },
+    city: {
+      type: STRING
+    },
+    country: {
+      type: STRING
+    },
+    open_id: {
       type: STRING,
       allowNull: false
     },
