@@ -18,29 +18,8 @@ class WeUserService extends Service {
       if (!sessionData.data.openid) {
         return null
       }
-      // 验证用户信息完整性
-      const sha1 = crypto
-        .createHash('sha1')
-        .update(fullUserInfo.rawData.toString() + sessionData.data.session_key)
-        .digest('hex')
 
-      if (fullUserInfo.signature !== sha1) {
-        console.log('we_user session验证失败-')
-        return null
-      }
-
-      // 解析用户数据
-      const wechatUserInfo = await this.ctx.helper.decryptUserInfoData(
-        sessionData.data.session_key,
-        fullUserInfo.encryptedData,
-        fullUserInfo.iv
-      )
-      if (_.isEmpty(wechatUserInfo)) {
-        console.log('---wechatUserInfo-isEmpty-')
-        return null
-      }
-
-      return wechatUserInfo
+      return sessionData
     } catch (e) {
       return null
     }

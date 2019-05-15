@@ -3,31 +3,42 @@ const uuidv1 = require('uuid/v1')
 class WeUserController extends BaseController {
   async login () {
     const { code, userInfo } = this.ctx.request.body
-    const session = await this.service.weUser.code2session(code, userInfo)
-    console.log('----session----', session)
-    if (!session) {
+    const sessionData = await this.service.weUser.code2session(code)
+    if (!sessionData) {
       this.fail('登录失败')
       return
     }
 
-    let targetUser = await this.ctx.model.WeUser.getUserByopenId(session.openId)
-    let targetUserId
+    let targetUserId = await this.ctx.model.WeUser.getUserIdByopenId(
+      sessionData.data.openid
+    )
+
     // 从来没登录过的认为是注册
-    if (!targetUser) {
+    if (!targetUserId) {
       targetUserId = await this.ctx.model.WeUser.addUser({
         user_id: uuidv1(),
-        nick_name: session.nickName,
-        gender: session.gender,
-        avatar: session.avatarUrl,
-        city: session.city,
-        country: session.country,
-        open_id: session.openId
+        nick_name: userInfo.nickName,
+        gender: userInfo.gender,
+        avatar: userInfo.avatarUrl,
+        city: userInfo.city,
+        country: userInfo.country,
+        open_id: sessionData.data.openid
       })
-    } else {
-      targetUserId = targetUser.user_id
     }
 
-    console.log('---targetUserId--', targetUserId)
+    const newUserInfo = await this.ctx.model.WeUser.getUserInfo(targetUserId)
+
+    const { openid: openId, session_key } = sessionData.data || {}
+
+    if (openId) {
+      const result = JSON.stringify({ openId, session_key })
+      // 保存openId和session_key到redis
+      await this.app.redis.get('default').setex(targetUserId, 600, result)
+    } else {
+      return this.fail('登录失败')
+    }
+
+    this.success({ token: targetUserId, userInfo: newUserInfo })
   }
 }
 

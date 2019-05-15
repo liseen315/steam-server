@@ -22,6 +22,7 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
     tokenKey: 'authorization',
+    weappToken: 'wetoken',
     appid: 'wxf15b26be5a4341a3',
     secret: 'bbcce9727298dba357e1943f276f0b78'
   }
