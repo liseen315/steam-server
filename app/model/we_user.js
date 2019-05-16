@@ -1,4 +1,5 @@
 const db = require('../../database/db')
+const moment = require('moment')
 module.exports = app => {
   const weUserSchema = require('../schema/we_user.js')(app)
   const WeUser = db.defineModel(app, 'we_user', weUserSchema)
@@ -40,6 +41,20 @@ module.exports = app => {
     }
 
     return conver
+  }
+
+  WeUser.updateLoginDate = async userId => {
+    const record = await WeUser.update(
+      { updated_at: moment(new Date()).format('YYYY-MM-DD HH:mm:ss') },
+      {
+        fields: ['updated_at'],
+        where: {
+          user_id: userId
+        }
+      }
+    )
+
+    return record
   }
 
   return WeUser

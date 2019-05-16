@@ -28,11 +28,15 @@ class WeUserController extends BaseController {
 
     const newUserInfo = await this.ctx.model.WeUser.getUserInfo(targetUserId)
 
+    const newRecord = await this.ctx.model.WeUser.updateLoginDate(targetUserId)
+
+    this.ctx.helper.checkUpdate(newRecord)
+
     const { openid: openId, session_key } = sessionData.data || {}
 
     if (openId) {
       const result = JSON.stringify({ openId, session_key })
-      // 保存openId和session_key到redis
+      // 保存openId和session_key到redis 暂时定10分钟过期
       await this.app.redis.get('default').setex(targetUserId, 600, result)
     } else {
       return this.fail('登录失败')
