@@ -24,13 +24,15 @@ class WeUserController extends BaseController {
         country: userInfo.country,
         open_id: sessionData.data.openid
       })
+    } else {
+      const newRecord = await this.ctx.model.WeUser.updateLoginDate(
+        targetUserId
+      )
+
+      this.ctx.helper.checkUpdate(newRecord)
     }
 
     const newUserInfo = await this.ctx.model.WeUser.getUserInfo(targetUserId)
-
-    const newRecord = await this.ctx.model.WeUser.updateLoginDate(targetUserId)
-
-    this.ctx.helper.checkUpdate(newRecord)
 
     const { openid: openId, session_key } = sessionData.data || {}
 

@@ -11,6 +11,11 @@ module.exports = app => {
         open_id: openId
       }
     })
+
+    if (!targetUser) {
+      return null
+    }
+
     return targetUser.user_id
   }
 
