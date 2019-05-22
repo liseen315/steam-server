@@ -40,6 +40,14 @@ module.exports = {
     }
   },
 
+  JsonParse (str, defaultResult) {
+    try {
+      return JSON.parse(str)
+    } catch (e) {
+      return defaultResult || {}
+    }
+  },
+
   /**
    * 检测update
    * @param {*} arr

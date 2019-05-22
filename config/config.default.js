@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1555731759199_796'
 
   // add your middleware config here
-  config.middleware = ['userInterceptor', 'errorHandler']
+  config.middleware = ['userInterceptor', 'weappAuth', 'errorHandler']
 
   // add your user config here
   const userConfig = {
@@ -35,6 +35,10 @@ module.exports = appInfo => {
   // 所有的weapp的接口都不走user拦截中间件
   config.userInterceptor = {
     ignore: '/weapp'
+  }
+  // 所有微信的接口都不走sysuser管理后台中间件
+  config.weappAuth = {
+    ignore: '/sysuser'
   }
 
   config.sequelize = {

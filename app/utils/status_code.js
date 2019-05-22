@@ -4,6 +4,7 @@
 const STATUS_CODE = {
   SUCCESS: 0,
   FAIL: -1,
+  LOGIN_FAIL: 100,
   TOKEN_NOTFOUND: 10001, // 没token
   TOKEN_EXP: 10002, // token过期
   TOKEN_ERROR: 10003 // token错误
