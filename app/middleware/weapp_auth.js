@@ -2,14 +2,13 @@ const { STATUS_CODE } = require('../utils/status_code')
 
 module.exports = (options, app) => {
   return async function weappAuth (ctx, next) {
-    const sessionId = ctx.get('sessionid')
-    const sesstion =
+    const sessionId = ctx.get('token')
+    const session =
       ctx.helper.JsonParse(await app.redis.get('default').get(sessionId)) || {}
-
-    const { userId } = sesstion
+    const { openId } = session
     const whiteList = ['/weapp/login']
 
-    if (userId || whiteList.includes(ctx.url)) {
+    if (openId || whiteList.includes(ctx.url)) {
       await next()
     } else {
       ctx.body = {

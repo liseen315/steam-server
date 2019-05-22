@@ -18,4 +18,5 @@ module.exports = app => {
 
   // 微信小程序
   router.post('/weapp/login', controller.weUser.login)
+  router.get('/weapp/info', controller.weUser.info)
 }

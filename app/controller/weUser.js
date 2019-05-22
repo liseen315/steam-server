@@ -46,6 +46,17 @@ class WeUserController extends BaseController {
 
     this.success({ token: targetUserId, userInfo: newUserInfo })
   }
+
+  async info () {
+    const userId = this.ctx.query.userId
+    const userInfo = await this.service.weUser.getInfo(userId)
+
+    if (!userInfo) {
+      return this.fail('没有此用户')
+    }
+
+    this.success(userInfo)
+  }
 }
 
 module.exports = WeUserController

@@ -24,6 +24,17 @@ class WeUserService extends Service {
       return null
     }
   }
+
+  async getInfo (userId) {
+    const userInfo = await this.ctx.model.WeUser.getUserInfo(userId)
+    if (!userInfo) {
+      const error = new Error('找不到指定的用户')
+      error.status = 422
+      throw error
+    }
+
+    return userInfo
+  }
 }
 
 module.exports = WeUserService
