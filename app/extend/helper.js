@@ -40,11 +40,11 @@ module.exports = {
     }
   },
 
-  JsonParse (str, defaultResult) {
+  JsonParse (str) {
     try {
       return JSON.parse(str)
     } catch (e) {
-      return defaultResult || {}
+      return {}
     }
   },
 
